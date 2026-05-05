@@ -1,19 +1,31 @@
+"use client"
+
 import { Button } from "@/components/ui/button"
+import { useAuth } from "@clerk/nextjs"
+import Link from "next/link"
+import { redirect } from "next/navigation";
 
 export default function Page() {
+  const {
+    userId,
+    isLoaded
+  } = useAuth();
+
+  if (!isLoaded) {
+    return null;
+  }
+
+  if (userId) redirect("/notes");
+
   return (
-    <div className="flex min-h-svh p-6">
-      <div className="flex max-w-md min-w-0 flex-col gap-4 text-sm leading-loose">
-        <div>
-          <h1 className="font-medium">Project ready!</h1>
-          <p>You may now add components and start building.</p>
-          <p>We&apos;ve already added the button component for you.</p>
-          <Button className="mt-2">Button</Button>
-        </div>
-        <div className="font-mono text-xs text-muted-foreground">
-          (Press <kbd>d</kbd> to toggle dark mode)
-        </div>
+    <main className="h-screen flex flex-col items-center justify-center">
+      <h1 className="text-4xl font-bold mb-4">Welcome to SmartNotes</h1>
+      <p className="text-lg text-gray-600 mb-8">Your personal note-taking app</p>
+      <div className="flex gap-4">
+        <Link href="/notes">
+          <Button variant="outline">Open</Button>
+        </Link>
       </div>
-    </div>
+    </main>
   )
 }
