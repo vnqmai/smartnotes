@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import { smartNotesPineconeIndex } from "@/lib/db/pinecone"
 import { prisma } from "@/lib/db/prisma"
 import { getEmbeddings } from "@/lib/geminiai"
