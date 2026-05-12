@@ -1,4 +1,6 @@
-import { useRouter } from "next/dist/client/components/navigation"
+"use client"
+
+import { useRouter } from "next/navigation"
 import {
   Dialog,
   DialogContent,
