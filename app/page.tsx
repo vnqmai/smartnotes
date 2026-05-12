@@ -19,7 +19,7 @@ export default function Page() {
   if (userId) redirect("/notes");
 
   return (
-    <main className="h-screen flex flex-col items-center justify-center">
+    <main className="h-screen flex flex-col items-center justify-center text-center">
       <div className="mb-[-20px]">
         <Image src="/favicon.png" alt="favicon" width={200} height={200} />
       </div>
