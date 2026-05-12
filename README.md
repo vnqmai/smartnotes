@@ -60,6 +60,10 @@ pnpm typecheck  # tsc
 pnpm lint       # eslint (may require local config fixes)
 ```
 
+## API Docs (OpenAPI + Swagger UI)
+- OpenAPI spec: `GET /api/openapi`
+- Swagger UI: `/swagger`
+
 `prisma generate` is run in:
 - `postinstall` (local installs)
 - `pnpm build` (helps on Vercel where dependencies are cached)
