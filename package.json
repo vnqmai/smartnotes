@@ -20,6 +20,7 @@
     "@hookform/resolvers": "^3.10.0",
     "@pinecone-database/pinecone": "^7.2.0",
     "@prisma/client": "^6.0.0",
+    "@vercel/speed-insights": "^2.0.0",
     "ai": "^6.0.174",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
