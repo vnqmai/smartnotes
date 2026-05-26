@@ -44,7 +44,7 @@ export const POST = async (request: Request) => {
     if (!lastUserMessage) throw new Error("No user message found")
 
     const result = await streamText({
-      model: google("gemini-3.1-flash-lite-preview"),
+      model: google("gemini-3.1-flash-lite"),
       allowSystemInMessages: true,
       messages: cleanMessages,
       temperature: 0.5,

@@ -7,6 +7,8 @@ import { useEffect, useRef, useState } from "react"
 import { useRouter } from "next/navigation"
 import { useSmoothStream } from "@/hooks/chat-hooks"
 import { getMessageText, getToolSummary, hasSuccessfulCreateNoteTool } from "@/lib/utils/chat-utils"
+import ReactMarkdown from "react-markdown"
+import remarkGfm from "remark-gfm"
 
 interface IAICHatBoxProps {
   isOpen: boolean
@@ -128,7 +130,7 @@ const AIChatBox = ({ isOpen, setIsOpen }: IAICHatBoxProps) => {
 
   if (!isOpen) return null
   return (
-    <div className="fixed bottom-0 md:bottom-5 right-0 md:right-3 z-10 bg-white w-full md:max-w-[600px] h-full md:max-h-[600px] border-2 rounded-2xl flex flex-col">
+    <div className="fixed bottom-0 md:bottom-5 right-0 md:right-3 z-10 w-full md:max-w-[600px] h-full md:max-h-[600px] rounded-2xl border bg-card text-card-foreground shadow-xl flex flex-col">
       <XCircle size={30} className="absolute right-0 top-0 translate-y-1 md:translate-y-[calc(-100%-10px)] cursor-pointer hover:box-shadow" onClick={() => setIsOpen(false)} />
       <div
         ref={scrollAreaRef}
@@ -164,7 +166,7 @@ const AIChatBox = ({ isOpen, setIsOpen }: IAICHatBoxProps) => {
             .filter(Boolean)
         }
         {progress ? (
-          <div className="text-xs text-gray-500 animate-bounce">Thinking...</div>
+          <div className="text-xs text-muted-foreground animate-bounce">Thinking...</div>
         ) : null}
 
         {error && (
@@ -178,7 +180,7 @@ const AIChatBox = ({ isOpen, setIsOpen }: IAICHatBoxProps) => {
           ref={inputRef}
           type="text"
           placeholder="Type your message..."
-          className="w-full p-2 border rounded"
+          className="w-full"
           value={input}
           onChange={(e) => setInput(e.target.value)}
         />
@@ -215,7 +217,24 @@ const ChatMessage = ({
       <div className="w-10 h-10 flex items-center justify-center">
         {role === "user" ? <UserAvatar /> : <Bot />}
       </div>
-      <div className={`px-3 py-3 my-1 rounded-3xl ${role === 'user' ? 'bg-blue-500 text-white self-end rounded-br-none' : 'bg-gray-300 text-black rounded-bl-none'}`}>{displayedText}</div>
+      <div
+        className={[
+          "px-3 py-3 my-1 rounded-3xl",
+          role === "user"
+            ? "bg-blue-500 text-white self-end rounded-br-none"
+            : "bg-muted text-foreground rounded-bl-none",
+        ].join(" ")}
+      >
+        {role === "assistant" || role === "system" ? (
+          <div className="prose prose-sm max-w-none dark:prose-invert prose-p:my-0 prose-pre:my-2 prose-ol:my-0 prose-ul:my-0">
+            <ReactMarkdown remarkPlugins={[remarkGfm]}>
+              {displayedText}
+            </ReactMarkdown>
+          </div>
+        ) : (
+          displayedText
+        )}
+      </div>
     </div>
   )
 }
